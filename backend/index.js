@@ -20,6 +20,12 @@ app.use("/reservation", reservationRoutes);
 const staffRoutes = require("./routes/staffRoute");
 app.use("/staff", staffRoutes);
 
+const cusAuth = require("./routes/cusAuthRoute");
+app.use("/auth",cusAuth);
+
+const admminAuth = require("./routes/adminAuthRoute");
+app.use("/admin",admminAuth);
+
 
 app.listen(PORT, () => {
   console.log("App listening on PORT " + PORT);

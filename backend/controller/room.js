@@ -3,7 +3,7 @@ const pool = require("../db")
 
 exports.getAllRooms = async (req,res) => {
     try {
-        const rooms = await pool.query("SELECT DISTINCT roomtype, capacity, price_per_night FROM room")
+        const rooms = await pool.query("SELECT * FROM room")
         res.json(rooms.rows)
     } catch (err) {
         console.log(err)
