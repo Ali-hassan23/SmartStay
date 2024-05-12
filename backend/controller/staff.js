@@ -71,29 +71,46 @@ exports.deleteStaff = async (req, res) => {
 };
 
 exports.updateStaff = async (req, res) => {
+  const { id } = req.params;
+  const { firstname, lastname, contact, email, dob, salary, role } = req.body;
+  // console.log(id, firstname, lastname, contact, email, dob, salary, role)
+  const query = `
+    UPDATE Staff
+    SET 
+      firstName = $1,
+      lastName = $2,
+      contact = $3,
+      email = $4,
+      DOB = $5,
+      salary = $6,
+      role = $7
+    WHERE
+      staffID = $8
+  `;
   try {
-      const { staffid } = req.params;
-      const { firstName, lastName, contact, email, DOB, salary, role } = req.body;
-
-      // Check if the staff ID exists
-      console.log(staffid)
-      const existingStaff = await pool.query('SELECT * FROM Staff WHERE staffID = $1', [staffid]);
-      if (existingStaff.rows.length === 0) {
-          return res.status(404).json({ message: "Staff member not found." });
-      }
-
-      const query = `
-          UPDATE Staff
-          SET firstName = $1, lastName = $2, contact = $3, email = $4, DOB = $5, salary = $6, role = $7
-          WHERE staffID = $8
-          RETURNING *
-      `;
-      const values = [firstName, lastName, contact, email, DOB, salary, role, staffid];
-      const result = await pool.query(query, values);
-
-      res.status(200).json({ message: "Staff member updated successfully.", staff: result.rows[0] });
+    const result = await pool.query(query, [
+      firstname,
+      lastname,
+      contact,
+      email,
+      dob,
+      salary,
+      role,
+      id,
+    ]);
+    if (result.rowCount === 0) {
+      return res.status(404).send("Staff member not found");
+    }
+    res.status(200).send("Staff member updated successfully");
   } catch (error) {
-      console.error("Error updating staff member:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+    console.error("Error updating data:", error);
+    if (error.code === "23505") {
+      if (error.constraint === "staff_email_key") {
+        return res
+          .status(409)
+          .send("A staff member with the same email already exists.");
+      }
+    }
+    res.status(500).send("Failed to update staff member");
   }
 };
