@@ -71,29 +71,29 @@ exports.deleteStaff = async (req, res) => {
 };
 
 exports.updateStaff = async (req, res) => {
-    try {
-        const { staffid } = req.params;
-        const { firstName, lastName, contact, email, DOB, salary, role } = req.body;
+  try {
+      const { staffid } = req.params;
+      const { firstName, lastName, contact, email, DOB, salary, role } = req.body;
 
-        // Check if the staff ID exists
-        console.log(staffid)
-        const existingStaff = await pool.query('SELECT * FROM Staff WHERE staffID = $1', [staffid]);
-        if (existingStaff.rows.length === 0) {
-            return res.status(404).json({ message: "Staff member not found." });
-        }
+      // Check if the staff ID exists
+      console.log(staffid)
+      const existingStaff = await pool.query('SELECT * FROM Staff WHERE staffID = $1', [staffid]);
+      if (existingStaff.rows.length === 0) {
+          return res.status(404).json({ message: "Staff member not found." });
+      }
 
-        const query = `
-            UPDATE Staff
-            SET firstName = $1, lastName = $2, contact = $3, email = $4, DOB = $5, salary = $6, role = $7
-            WHERE staffID = $8
-            RETURNING *
-        `;
-        const values = [firstName, lastName, contact, email, DOB, salary, role, staffid];
-        const result = await pool.query(query, values);
+      const query = `
+          UPDATE Staff
+          SET firstName = $1, lastName = $2, contact = $3, email = $4, DOB = $5, salary = $6, role = $7
+          WHERE staffID = $8
+          RETURNING *
+      `;
+      const values = [firstName, lastName, contact, email, DOB, salary, role, staffid];
+      const result = await pool.query(query, values);
 
-        res.status(200).json({ message: "Staff member updated successfully.", staff: result.rows[0] });
-    } catch (error) {
-        console.error("Error updating staff member:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
+      res.status(200).json({ message: "Staff member updated successfully.", staff: result.rows[0] });
+  } catch (error) {
+      console.error("Error updating staff member:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
 };

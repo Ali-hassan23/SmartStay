@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
-const { viewAllStaff, createStaff, updateStaff, deleteStaff } = require("../controller/staff");
+const { viewAllStaff, viewStaffById, createStaff, deleteStaff } = require("../controller/staff");
 
 router.get("/",viewAllStaff);
-router.post("/addStaff",createStaff);
-router.put("/update/:staffid",updateStaff)
-router.delete("/delete/:staffid",deleteStaff)
+router.get("/:id",viewStaffById);
+router.post("/",createStaff);
+router.delete('/:id',deleteStaff);
 
 module.exports = router;
