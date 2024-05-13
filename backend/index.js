@@ -26,6 +26,9 @@ app.use("/auth",cusAuth);
 const admminAuth = require("./routes/adminAuthRoute");
 app.use("/admin",admminAuth);
 
+const contactUs = require("./routes/contactRoute");
+app.use("/contact",contactUs);
+
 
 app.listen(PORT, () => {
   console.log("App listening on PORT " + PORT);

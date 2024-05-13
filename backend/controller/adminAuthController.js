@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
         }
 
         // Generate JWT token with admin ID and role in the payload
-        const accessToken = jwt.sign({ id: admin.adminID, role: admin.role }, process.env.ACCESS_TOKEN_SECRET);
+        const accessToken = jwt.sign({ id: admin.adminID, role: admin.role }, process.env.ACCESS_TOKEN_SECRET, {expiresIn:'10s'});
         
         // Successful login
         res.json({ accessToken });
@@ -36,7 +36,6 @@ exports.login = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
 
 // Test function to display contents of admin table
 exports.displayAdmins = async (req, res) => {
@@ -49,3 +48,26 @@ exports.displayAdmins = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+//Added By Hassan
+exports.verifyAdmin = (req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+  
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(403).json({ message: 'Failed to authenticate token' });
+      }
+  
+      // Check if user is an admin
+      if (decoded.role !== 'admin') {
+        return res.status(403).json({ message: 'Unauthorized access' });
+      }
+  
+      req.user = decoded;
+      next();
+    });
+  };

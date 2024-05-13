@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const  pool  = require('../db');
 const adminAuthController = require('../controller/adminAuthController'); 
-const { authenticateAdminToken } = require('../middleware/adminAuthMiddleware');
+const { authenticateAdminToken, verifyAdmin } = require('../middleware/adminAuthMiddleware');
 
 router.post('/login', adminAuthController.login);
 
@@ -12,6 +12,11 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/displayAdmins', authenticateAdminToken, adminAuthController.displayAdmins);
+
+//Added By Hassan
+router.get('/verify-admin',verifyAdmin , (req, res) => {
+    res.status(200).json({ message: 'Admin verified' });
+  });
 
 
 
