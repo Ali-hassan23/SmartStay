@@ -15,7 +15,7 @@ exports.viewAllReservations = async (req, res) => {
 
 
         // Query reservations for the logged-in customer
-        const reservations = await pool.query("SELECT * FROM reservation WHERE customerid = $1", [customerId]);
+        const reservations = await pool.query("SELECT * FROM ReservationWithPaymentDetails WHERE reservationID IN ( SELECT reservationID FROM Reservation WHERE customerID = $1)", [customerId]);
         res.json(reservations.rows);
     } catch (err) {
         console.error(err);
@@ -36,7 +36,7 @@ exports.makeReservation = async (req, res) => {
         const customerId = decoded.id;
 
         // Extract reservation details from the request body
-        const { roomNo, checkinDate, checkoutDate, cost } = req.body;
+        const { roomNo, checkinDate, checkoutDate } = req.body;
 
         // Generate a reservation ID (you can use any logic to generate this)
         const reservationID = generateReservationID();
