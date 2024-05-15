@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
         }
 
         // Generate JWT token with admin ID and role in the payload
-        const accessToken = jwt.sign({ id: admin.adminID, role: admin.role }, process.env.ACCESS_TOKEN_SECRET, {expiresIn:'1h'});
+        const accessToken = jwt.sign({ id: admin.adminID, role: admin.role }, process.env.ACCESS_TOKEN_SECRET, {expiresIn:'30m'});
         
         // Successful login
         res.json({ accessToken });

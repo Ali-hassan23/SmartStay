@@ -29,6 +29,9 @@ app.use("/admin",admminAuth);
 const contactUs = require("./routes/contactRoute");
 app.use("/contact",contactUs);
 
+const roomTypes = require("./routes/roomTypeRoutes");
+app.use("/roomType",roomTypes);
+
 
 app.listen(PORT, () => {
   console.log("App listening on PORT " + PORT);
