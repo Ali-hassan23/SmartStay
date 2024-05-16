@@ -38,3 +38,36 @@ exports.checkDuplicateEmail = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+// Sign up controller
+exports.signup = async (req, res) => {
+    const { firstname, lastname, email, password, address, phone } = req.body;
+
+    const customerid = generateRandomCustomerId();
+    const query = `
+        INSERT INTO customer (customerid, firstname, lastname, email, password, address, phone)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `;
+    try {
+        await pool.query(query, [customerid, firstname, lastname, email, password, address, phone]);
+        res.status(201).send("Customer signed up successfully.");
+    } catch (error) {
+        console.error("Error inserting data:", error);
+        if (error.code === "23505") {
+            if (error.constraint === "customer_email_key") {
+                return res.status(409).send("A customer with the same email already exists.");
+            }
+        }
+        res.status(500).send("Failed to add customer.");
+    }
+};
+
+// Function to generate customer ID
+function generateRandomCustomerId() {
+    const characters = '0123456789';
+    let customerId = 'C';
+    for (let i = 0; i < 5; i++) {
+        customerId += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return customerId;
+}
