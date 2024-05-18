@@ -12,8 +12,9 @@ exports.getAllRooms = async (req,res) => {
 
 exports.getAllRoomsOfOneCategory = async (req,res) => {
     try {
-        let category = req.params.category
-        const rooms = await pool.query("SELECT * FROM AvailableRoomsOfType WHERE typeName = $1",[category])
+        let category = req.params.id
+        console.log(category)
+        const rooms = await pool.query("SELECT * FROM room WHERE roomtypeid = $1",[category])
         res.json(rooms.rows)
     } catch (err) {
         console.log(err)

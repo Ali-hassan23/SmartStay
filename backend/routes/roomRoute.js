@@ -4,6 +4,6 @@ const pool = require("../db");
 const { getAllRooms, getAllRoomsOfOneCategory } = require("../controller/room");
 
 router.get("/",getAllRooms);
-router.get("/:category",getAllRoomsOfOneCategory);
+router.get("/:id",getAllRoomsOfOneCategory);
 
 module.exports = router;
