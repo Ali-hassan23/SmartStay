@@ -36,7 +36,7 @@ exports.makeReservation = async (req, res) => {
         const customerId = decoded.id;
 
         // Extract reservation details from the request body
-        const { roomNo, checkinDate, checkoutDate } = req.body;
+        const { roomNo, checkinDate, checkoutDate, cost } = req.body;
 
         // Generate a reservation ID (you can use any logic to generate this)
         const reservationID = generateReservationID();

@@ -16,4 +16,5 @@ router.get('/login', (req, res) => {
 
 router.post('/checkDuplicateEmail', authController.checkDuplicateEmail);
 
+router.post("/signup",authController.signup)
 module.exports = router;
