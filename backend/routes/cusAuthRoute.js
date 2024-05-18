@@ -8,6 +8,7 @@ const { pool } = require('../db');
 const authController = require('../controller/cusAuthController'); 
 
 router.post('/login', authController.login);
+router.post('/signup', authController.signup);
 
 // Test function
 router.get('/login', (req, res) => {
