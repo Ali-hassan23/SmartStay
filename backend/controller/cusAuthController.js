@@ -41,15 +41,15 @@ exports.checkDuplicateEmail = async (req, res) => {
 
 // Sign up controller
 exports.signup = async (req, res) => {
-    const { firstname, lastname, email, password, address, phone } = req.body;
+    const { firstname, lastname, email, dob, password, address, phone } = req.body;
 
     const customerid = generateRandomCustomerId();
     const query = `
-        INSERT INTO customer (customerid, firstname, lastname, email, password, address, phone)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO customer (customerid, firstname, lastname, email, dob, password, address, phone)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
     try {
-        await pool.query(query, [customerid, firstname, lastname, email, password, address, phone]);
+        await pool.query(query, [customerid, firstname, lastname, email,dob, password, address, phone]);
         res.status(201).send("Customer signed up successfully.");
     } catch (error) {
         console.error("Error inserting data:", error);

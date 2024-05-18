@@ -5,7 +5,8 @@ const { viewAllStaff, viewStaffById, createStaff, deleteStaff, updateStaff } = r
 const { authenticateAdminToken } = require("../middleware/adminAuthMiddleware");
 
 router.get("/",authenticateAdminToken,viewAllStaff);
-router.get("/:id",authenticateAdminToken,viewStaffById);
+// router.get("/:id",authenticateAdminToken,viewStaffById);
+router.get("/:id",viewStaffById);
 router.post("/",authenticateAdminToken,createStaff);
 router.delete('/:id',authenticateAdminToken,deleteStaff);
 router.put("/:id",authenticateAdminToken,updateStaff);
