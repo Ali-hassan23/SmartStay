@@ -10,7 +10,6 @@ const PORT = 5000;
 const amenitiesRoutes = require("./routes/amenitiesRoutes");
 app.use("/amenities", amenitiesRoutes);
 
-
 const roomRoutes = require("./routes/roomRoute");
 app.use("/rooms", roomRoutes);
 
@@ -32,6 +31,8 @@ app.use("/contact",contactUs);
 const roomTypes = require("./routes/roomTypeRoutes");
 app.use("/roomType",roomTypes);
 
+const payments = require("./routes/paymentRoute");
+app.use("/payment",payments);
 
 app.listen(PORT, () => {
   console.log("App listening on PORT " + PORT);

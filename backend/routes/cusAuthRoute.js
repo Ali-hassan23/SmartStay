@@ -1,5 +1,3 @@
-// routes/authRoutes.js
-
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -17,5 +15,5 @@ router.get('/login', (req, res) => {
 
 router.post('/checkDuplicateEmail', authController.checkDuplicateEmail);
 
-router.post("/signup",authController.signup)
+// router.post("/signup",authController.signup)
 module.exports = router;

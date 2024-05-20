@@ -20,3 +20,15 @@ exports.getAllRoomsOfOneCategory = async (req,res) => {
         console.log(err)
     }
 }
+
+
+//New function for getting the first available room of type 
+exports.getFirstRoomAvailableOfCategory = async (req,res) => {
+    try {
+        let category = req.params.id
+        const rooms = await pool.query("SELECT roomno FROM room WHERE roomtypeid = $1 AND availability = true LIMIT 1",[category])
+        res.json(rooms.rows)
+    } catch (error) {
+        console.log(error);
+    }
+}
