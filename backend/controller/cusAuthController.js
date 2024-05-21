@@ -37,6 +37,8 @@ exports.signup = async (req, res) => {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
   const customerid = generateCustomerID();
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const result = await pool.query(query, [
       customerid,
       firstname,
@@ -45,7 +47,7 @@ exports.signup = async (req, res) => {
       email,
       dob,
       address,
-      password,
+      hashedPassword,
     ]);
     res.status(201).send("Customer added successfully");
   } catch (error) {

@@ -27,3 +27,12 @@ function generatePaymentID() {
     return "P" + randomNumber;
   }
   
+exports.viewAllPayments = async (req,res) => {
+    try {
+        const payments = await pool.query("SELECT * FROM active_reservation_payments");
+        res.json(payments.rows)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error");
+    }
+}
