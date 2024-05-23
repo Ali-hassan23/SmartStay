@@ -46,3 +46,5 @@ async function encryptPasswords() {
 
 // Call the function to start encrypting passwords for admin table
 encryptPasswords();
+
+ 
