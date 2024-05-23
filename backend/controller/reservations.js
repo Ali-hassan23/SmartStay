@@ -10,7 +10,7 @@ exports.viewAllReservations = async (req, res) => {
 
     // Get the customer ID from the JWT token
     const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_CUSTOMER_TOKEN_SECRET);
     const customerId = decoded.id;
 
     // Query reservations for the logged-in customer
@@ -68,6 +68,18 @@ exports.makeReservation = async (req, res) => {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
+};
+
+exports.activeReservations = async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM reservation WHERE checkoutdate > CURRENT_DATE");
+    console.log(result)
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error fetching active reservations:', error);
+    res.status(500).json('An error occurred while fetching active reservations');
+ }
 };
 
 function generateReservationID() {
