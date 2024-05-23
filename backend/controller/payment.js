@@ -36,3 +36,16 @@ exports.viewAllPayments = async (req,res) => {
         res.status(500).send("Internal Server Error");
     }
 }
+
+exports.viewPayments = async (req,res) =>{
+    try {
+        const query = `
+        Select * from Payment
+        `
+        const result = await pool.query(query);
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json('An error occurred while fetching Payments');
+    }
+}

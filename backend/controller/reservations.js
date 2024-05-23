@@ -76,11 +76,10 @@ exports.activeReservations = async (req, res) => {
     console.log(result)
 
     res.status(200).json(result.rows);
-    // res.json("HEHEHEHEHE")
   } catch (error) {
     console.error('Error fetching active reservations:', error);
     res.status(500).json('An error occurred while fetching active reservations');
-  }
+ }
 };
 
 function generateReservationID() {
