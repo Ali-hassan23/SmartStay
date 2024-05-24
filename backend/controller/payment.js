@@ -21,6 +21,15 @@ exports.makePayment = async(req,res) => {
     }
 }
 
+exports.viewPayments = async(req,res) => {
+    try {
+        const response = await pool.query('SELECT * FROM Payment');
+        res.json(response.rows)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 function generatePaymentID() {
     // Logic to generate a unique reservation ID
     const randomNumber = Math.floor(10000 + Math.random() * 90000);
