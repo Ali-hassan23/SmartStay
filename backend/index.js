@@ -34,6 +34,9 @@ app.use("/roomType",roomTypes);
 const payments = require("./routes/paymentRoute");
 app.use("/payment",payments);
 
+const dashboard = require("./routes/dashboardRoute");
+app.use("/dashboard",dashboard);
+
 app.listen(PORT, () => {
   console.log("App listening on PORT " + PORT);
 });
