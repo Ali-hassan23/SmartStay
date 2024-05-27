@@ -1,6 +1,5 @@
 const pool = require("../db")
 
-
 exports.getAllRooms = async (req,res) => {
     try {
         const rooms = await pool.query("SELECT * FROM roomtype")
